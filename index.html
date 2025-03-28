@@ -48,12 +48,15 @@
         document.addEventListener('DOMContentLoaded', function() {
             let splide = new Splide('.splide', {
                 type: 'loop',      // Hace que el carrusel sea infinito
-                perPage: 1,        // Muestra una imagen a la vez
+                perPage: 2,        // dicta el numero de imagenes que se muestrran
                 autoplay: true,    // Activa la reproducción automática
                 interval: 3000,    // Cambia cada 3 segundos
                 pauseOnHover: false,// Pausa al pasar el mouse
-                heightRatio: 0.5   // Mantiene una proporción de altura del 50%
+                heightRatio: 0.5 ,  // Mantiene una proporción de altura del 50%
+                padding: '5rem',
+                rewind : true,
             });
+
             splide.mount();
         });
     </script>
