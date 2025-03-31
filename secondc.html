@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Segundo carrusel</title>
+    <link href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .splide__slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: fill;
+            border-radius: 8px;
+        }
+        .my-carousel-progress {
+            background: #ccc;
+            width: 100%;
+            height: 4px;
+            margin-top: 10px;
+            position: relative;
+        }
+        .my-carousel-progress-bar {
+            background: greenyellow;
+            height: 100%;
+            width: 0;
+            transition: width 400ms ease;
+        }
+        .splide__pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+        .splide__pagination__page {
+            width: 30px;
+            height: 30px;
+            background: #333;
+            color: white;
+            border-radius: 5px;
+            margin: 0 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            transition: background 0.3s ease;
+            position: relative;
+        }
+        .splide__pagination__page::before {
+            content: attr(data-index);
+            position: absolute;
+            color: white;
+            font-size: 14px;
+        }
+        .splide__pagination__page.is-active {
+            background: yellowgreen;
+            color: black;
+        }
+    </style>
+</head>
+<body class="bg-gray-500">
+    <div class="container mx-auto py-8">
+        <h1 class="text-3xl font-bold text-center mb-8">Segundo Carrusel</h1>
+        
+        <section class="splide" aria-label="Carrusel de imágenes">
+            <div class="splide__track">  
+                <ul class="splide__list">
+                    <li class="splide__slide"><img src="images/img1.jpg" alt="Descripción imagen 1"></li>
+                    <li class="splide__slide"><img src="images/img2.jpg" alt="Descripción imagen 2"></li>
+                    <li class="splide__slide"><img src="images/img3.jpg" alt="Descripción imagen 3"></li>
+                    <li class="splide__slide"><img src="images/img4.jpg" alt="Descripción imagen 4"></li>
+                    <li class="splide__slide"><img src="images/img5.jpg" alt="Descripción imagen 5"></li>
+                    <li class="splide__slide"><img src="images/img6.jpg" alt="Descripción imagen 6"></li>
+                </ul>
+            </div>
+            
+            <div class="my-carousel-progress">
+                <div class="my-carousel-progress-bar"></div>
+            </div>
+            
+            <ul class="splide__pagination"></ul>
+        </section>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var splide = new Splide('.splide', {
+                type: 'loop',
+                perPage: 1,
+                perMove: 1,
+                autoplay: true,
+                interval: 3000,
+                pauseOnHover: false,
+                pauseOnFocus: false,
+                heightRatio: 0.5,
+                rewind: true,
+                pagination: true,
+                direction: 'ttb',
+               
+            });
+            
+            var bar = document.querySelector('.my-carousel-progress-bar');
+            
+            splide.on('mounted move', function() {
+                var end = splide.Components.Controller.getEnd() + 1;
+                var rate = Math.min((splide.index + 1) / end, 1);
+                bar.style.width = String(100 * rate) + '%';
+            });
+            
+            splide.on('pagination:mounted', function(data) {
+                data.items.forEach(function(item, index) {
+                    item.button.setAttribute('data-index', index + 1);
+                });
+            });
+            
+            splide.mount();
+        });
+    </script>
+</body>
+</html>
